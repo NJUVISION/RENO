@@ -43,6 +43,7 @@ def process(input_f):
         d1_psnr = float(str(output).split('mseF,PSNR (p2point):')[1].split('\\n')[0])
         d2_psnr = float(str(output).split('mseF,PSNR (p2plane):')[1].split('\\n')[0])
     except:
+        print('!!!Error!!!', cmd)
         d1_psnr, d2_psnr = -1, -1
         
     return np.array([filename_wo_ext, d1_psnr, d2_psnr])

@@ -33,12 +33,13 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter
 )
 
-parser.add_argument('--input_glob', default='./data/kitt_compressed/*.bin', help='Glob pattern for input bin files.')
-parser.add_argument('--output_folder', default='./data/kitt_decompressed/', help='Folder to save decompressed ply files.')
+parser.add_argument('--input_glob', default='./data/kittdet_compressed/*.bin', help='Glob pattern for input bin files.')
+parser.add_argument('--output_folder', default='./data/kittdet_decompressed/', help='Folder to save decompressed ply files.')
+parser.add_argument("--is_data_pre_quantized", type=bool, default=False, help="Whether the original point cloud is pre quantized.")
 
 parser.add_argument('--channels', type=int, help='Neural network channels.', default=32)
 parser.add_argument('--kernel_size', type=int, help='Convolution kernel size.', default=3)
-parser.add_argument('--ckpt', help='Convolution kernel size.', default='./model/KITTIDetection/ckpt.pt')
+parser.add_argument('--ckpt', help='Checkpoint load path.', default='./model/KITTIDetection/ckpt.pt')
 
 args = parser.parse_args()
 
@@ -120,8 +121,12 @@ with torch.no_grad():
             
         # decode the last layer
         scan = net.fcg(x.C, x.F)
-        scan = (scan[:, 1:] * posQ - 131072) * 0.001
-        
+
+        if args.is_data_pre_quantized:
+            scan = scan[:, 1:] * posQ
+        else:
+            scan = (scan[:, 1:] * posQ - 131072) * 0.001
+
         dec_time_end = time.time()
 
         dec_time_ls.append(dec_time_end-dec_time_start)

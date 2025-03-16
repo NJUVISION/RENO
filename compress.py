@@ -33,13 +33,14 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter
 )
 
-parser.add_argument('--input_glob', default='./data/examples/*.ply', help='Glob pattern for input point clouds.')
-parser.add_argument('--output_folder', default='./data/kitt_compressed/', help='Folder to save compressed bin files.')
+parser.add_argument('--input_glob', default='./data/kittidet_examples/*.ply', help='Glob pattern for input point clouds.')
+parser.add_argument('--output_folder', default='./data/kittidet_compressed/', help='Folder to save compressed bin files.')
+parser.add_argument("--is_data_pre_quantized", type=bool, default=False, help="Whether the input data is pre quantized.")
 parser.add_argument('--posQ', default=16, type=int, help='Quantization scale.')
 
 parser.add_argument('--channels', type=int, help='Neural network channels.', default=32)
 parser.add_argument('--kernel_size', type=int, help='Convolution kernel size.', default=3)
-parser.add_argument('--ckpt', help='Convolution kernel size.', default='./model/KITTIDetection/ckpt.pt')
+parser.add_argument('--ckpt', help='Checkpoint load path.', default='./model/KITTIDetection/ckpt.pt')
 
 parser.add_argument('--num_samples', default=-1, help='Random choose some samples for quick test. [-1 means test all data]')
 
@@ -77,9 +78,11 @@ with torch.no_grad():
 
         ################################ Get xyz
 
-        # xyz = torch.round(torch.tensor(xyz_ls[file_idx] / 0.001 / args.posQ))
-        # xyz = (xyz + (131072 / args.posQ)).int()
-        xyz = torch.tensor(xyz_ls[file_idx] / 0.001 + 131072)
+        if args.is_data_pre_quantized:
+            xyz = torch.tensor(xyz_ls[file_idx])
+        else:
+            xyz = torch.tensor(xyz_ls[file_idx] / 0.001 + 131072)
+
         xyz = torch.round(xyz / args.posQ).int()
         N = xyz.shape[0]
 

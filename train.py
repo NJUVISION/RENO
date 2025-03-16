@@ -37,9 +37,9 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter
 )
 
-parser.add_argument('--training_data', default='/root/dataset/Ford/Ford_q1mm/Ford_01_q_1mm/**/*.ply', help='Training data (Glob pattern).')
-parser.add_argument('--model_save_folder', default='./model/Ford', help='Directory where to save trained models.')
-parser.add_argument("--is_data_pre_quantized", type=bool, default=True, help="Whether the training data is pre quantized.")
+parser.add_argument('--training_data', default='/root/Dataset/KITTI_detection/training/velodyne/*.ply', help='Training data (Glob pattern).')
+parser.add_argument('--model_save_folder', default='./model/KITTIDetection', help='Directory where to save trained models.')
+parser.add_argument("--is_data_pre_quantized", type=bool, default=False, help="Whether the training data is pre quantized.")
 parser.add_argument("--valid_samples", type=str, default='', help="Something like train.txt/val.txt.")
 
 parser.add_argument('--channels', type=int, help='Neural network channels.', default=32)
