@@ -1,11 +1,10 @@
 # RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds
 
-<!-- [![arXiv](https://img.shields.io/badge/Arxiv-2404.06936-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2404.06936) -->
+[![arXiv](https://img.shields.io/badge/Arxiv-2503.12382-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2503.12382)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-
 ## ✨ Introduction
-This repository is the offical PyTorch implementation of our paper *RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds*. **The article has been uploaded to arXiv and should be publicly accessible in two to three days. Stay tuned!**
+This repository is the offical PyTorch implementation of our paper *RENO: Real-Time Neural Compression for 3D LiDAR Point Clouds*.
 
 **Abstract:** Despite the substantial advancements demonstrated by learning-based neural models in the LiDAR Point Cloud Compression (LPCC) task, realizing real-time compression—an indispensable criterion for numerous industrial applications—remains a formidable challenge. This paper proposes RENO, the first real-time neural codec for 3D LiDAR point clouds, achieving superior performance with a lightweight model. RENO skips the octree construction and directly builds upon the multiscale sparse tensor representation. Instead of the multi-stage inferring, RENO devises sparse occupancy codes, which exploit cross-scale correlation and derive voxels' occupancy in a one-shot manner, greatly saving processing time. Experimental results demonstrate that the proposed RENO achieves real-time coding speed, 10 fps at 14-bit depth on a desktop platform (e.g., one RTX 3090 GPU) for both encoding and decoding processes, while providing 12.25% and 48.34% bit-rate savings compared to G-PCCv23 and Draco, respectively, at a similar quality. RENO model size is merely 1MB, making it attractive for practical applications. The source code is available at https://github.com/NJUVISION/RENO.
 
